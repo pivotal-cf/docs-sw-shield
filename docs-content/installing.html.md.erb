@@ -22,7 +22,7 @@ The Stark & Wayne SHIELD™ product will appear in the "Available Products" list
 
 The first time you upload/install the tile it will appear with a red lower border. This means it is not yet ready to be installed - there are mandatory configuration that you will need to provide. Notably, the default Archiving configuration.
 
-![installation-SHIELD-tile](images/installation-SHIELD-tile.png)
+![installation-SHIELD-tile](images/installation-sheild-tile.png)
 
 ## <a id="configuration"></a>Configuration
 
@@ -32,7 +32,7 @@ There are several panels of configuration for Stark & Wayne SHIELD™ that you n
 
 If you have configure more than one **network** at your **Ops Manager Director** you will be required to select which **network** must be used when installing this tile:
 
-![installation-SHIELD-azs-networks](images/installation-SHIELD-azs-networks.png)
+![installation-SHIELD-azs-networks](images/installation-shield-azs-networks.png)
 
 ### <a id="configuration-archiving"></a>Archiving
 
@@ -41,7 +41,7 @@ should maintain the backup archives.
 
 1. In **Stark & Wayne SHIELD™ > Settings**, select **Archiving**.
 
-    ![installation-SHIELD-archiving](images/installation-SHIELD-archiving.png)
+    ![installation-SHIELD-archiving](images/installation-shield-archiving.png)
 
 2. Enter an **Environment** name for your SHIELD installation (ie: `production`).
 
@@ -59,11 +59,11 @@ If you want to use an Amazon AWS S3 Bucket to store your backup archives, perfor
 
 1. At the Amazon AWS console, navigate to the **S3** service and create a **S3 Bucket**:
 
-    ![installation-SHIELD-s3-bucket](images/installation-SHIELD-s3-bucket.png)
+    ![installation-SHIELD-s3-bucket](images/installation-shield-s3-bucket.png)
 
 2. Navigate to the **IAM** service and create an **AWS IAM User** with **Programmatic access** type:
 
-    ![installation-SHIELD-s3-iam-user](images/installation-SHIELD-s3-iam-user.png)
+    ![installation-SHIELD-s3-iam-user](images/installation-shield-s3-iam-user.png)
 
     **NOTE**: **Make sure you save the Secret Access Key somewhere secure**, like 1Password. Amazon AWS will be unable to give you it again if you misplace it -- your only recourse at that point is to generate a new set of keys and start over.
 
@@ -116,7 +116,7 @@ If you want to use a compatible AWS S3 Bucket (like Ceph) to store your backup a
 
 2. In **Stark & Wayne SHIELD™ > Settings**, select **Amazon AWS S3 Compatible Bucket**.
 
-    ![installation-SHIELD-archiving-s3-compatible](images/installation-SHIELD-archiving-s3-compatible.png)
+    ![installation-SHIELD-archiving-s3-compatible](images/installation-shield-archiving-s3-compatible.png)
 
 3. Complete the following fields:
 
@@ -142,15 +142,15 @@ If you want to use a Microsoft Azure Container to store your backup archives, pe
 
 1. At the Microsoft Azure Portal, navigate to the **Storage accounts tab**, and create an **Azure Storage Account**:
 
-    ![installation-SHIELD-azure-storage-account](images/installation-SHIELD-azure-storage-account.png)
+    ![installation-SHIELD-azure-storage-account](images/installation-shield-azure-storage-account.png)
 
 2. After the storage account is created, select the new storage account from the dashboard, navigate to the **Blob Service** section of the storage account, then click on **Containers**, and create a **Container**, setting the **Access type** to **Private**:
 
-    ![installation-SHIELD-azure-container](images/installation-SHIELD-azure-container.png)
+    ![installation-SHIELD-azure-container](images/installation-shield-azure-container.png)
 
 3. In **Stark & Wayne SHIELD™ > Settings**, select **Microsoft Azure Container**.
 
-    ![installation-SHIELD-archiving-azure](images/installation-SHIELD-archiving-azure.png)
+    ![installation-SHIELD-archiving-azure](images/installation-shield-archiving-azure.png)
 
 4. Complete the following fields:
 
@@ -168,15 +168,15 @@ If you want to use a Google Cloud Storage Bucket to store your backup archives, 
 
 1. At the Google Cloud Platform dashboard, navigate to the **IAM & Admin > Service Accounts** tab, and create a **Google Cloud Service Account** with **Storage Admin** privileges and **furnish a new JSON private key**:
 
-    ![installation-SHIELD-google-service-account](images/installation-SHIELD-google-service-account.png)
+    ![installation-SHIELD-google-service-account](images/installation-shield-google-service-account.png)
 
 2. At the Google Cloud Platform dashboard, under **Storage**, create a **Google Cloud Storage Bucket**:
 
-    ![installation-SHIELD-google-bucket](images/installation-SHIELD-google-bucket.png)
+    ![installation-SHIELD-google-bucket](images/installation-shield-google-bucket.png)
 
 3. In **Stark & Wayne SHIELD™ > Settings**, select **Google Cloud Storage Bucket**.
 
-    ![installation-SHIELD-archiving-google](images/installation-SHIELD-archiving-google.png)
+    ![installation-SHIELD-archiving-google](images/installation-shield-archiving-google.png)
 
 4. Complete the following fields:
 
@@ -208,7 +208,7 @@ If you want to use internal databases for your deployment, perform the following
 
 2. Select **Internal Databases (PostgreSQL NOT highly-available)**.
 
-    ![installation-SHIELD-database-internal](images/installation-SHIELD-database-internal.png)
+    ![installation-SHIELD-database-internal](images/installation-shield-database-internal.png)
 
 3. Click **Save**.
 
@@ -324,7 +324,7 @@ If you want to use external PostgreSQL databases for your deployment, perform th
 
 If required to upload a particular stemcell series, you can find the latest available stemcell at [Pivotal Network](https://network.pivotal.io/products/stemcells).
 
-![installation-SHIELD-stemcell](images/installation-SHIELD-stemcell.png)
+![installation-SHIELD-stemcell](images/installation-shield-stemcell.png)
 
 ## <a id="installation"></a>Installation
 
@@ -334,7 +334,7 @@ If required to upload a particular stemcell series, you can find the latest avai
 
 The install process generally requires several minutes to complete. The image shows the Changes Applied window that displays when the installation process successfully completes.
 
-![installation-SHIELD-completed](images/installation-SHIELD-completed.png)
+![installation-SHIELD-completed](images/installation-shield-completed.png)
 
 ## <a id="verification"></a>Verification
 
@@ -342,7 +342,7 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `SHIELD` hostname 
 
 1. The Stark & Wayne SHIELD™ Web UI is protected by a `username` and `password`. In **Stark & Wayne SHIELD™ > Credentials**, look for the **SHIELD Credentials**:
 
-    ![installation-SHIELD-credentials](images/installation-SHIELD-credentials.png)
+    ![installation-SHIELD-credentials](images/installation-shield-credentials.png)
 
 2. If you do not know the system domain for the deployment, then select **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain.
 
@@ -350,7 +350,7 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `SHIELD` hostname 
 
 4. Log in using the SHIELD credentials for the `admin` user. The Stark & Wayne SHIELD™ dashboard appears.
 
-    ![installation-SHIELD-dashboard](images/installation-SHIELD-dashboard.png)
+    ![installation-SHIELD-dashboard](images/installation-shield-dashboard.png)
 
 ### <a id="verification-storages"></a>Confirm default Storage
 
@@ -358,7 +358,7 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `SHIELD` hostname 
 
 2. Confirm that there is a **default** storage:
 
-    ![installation-SHIELD-default-storage](images/installation-SHIELD-default-storage.png)
+    ![installation-SHIELD-default-storage](images/installation-shield-default-storage.png)
 
 ### <a id="verification-rentention-policies"></a>Confirm default Retention Policy
 
@@ -366,7 +366,7 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `SHIELD` hostname 
 
 2. Confirm that there is a **default** retention policy:
 
-    ![installation-SHIELD-default-retention-policy](images/installation-SHIELD-default-retention-policy.png)
+    ![installation-SHIELD-default-retention-policy](images/installation-shield-default-retention-policy.png)
 
 ### <a id="verification-schedules"></a>Confirm default Schedule
 
@@ -374,7 +374,7 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `SHIELD` hostname 
 
 2. Confirm that there is a **default** storage:
 
-    ![installation-SHIELD-default-schedule](images/installation-SHIELD-default-schedule.png)
+    ![installation-SHIELD-default-schedule](images/installation-shield-default-schedule.png)
 
 ### <a id="verification-SHIELDdb"></a>Confirm SHIELD database Target and Job
 
@@ -384,10 +384,10 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `SHIELD` hostname 
 
 2. Confirm that there is a **SHIELDdb** target:
 
-    ![installation-SHIELD-SHIELDdb-target](images/installation-SHIELD-SHIELDdb-target.png)
+    ![installation-SHIELD-SHIELDdb-target](images/installation-shield-shielddb-target.png)
 
 3. At the Stark & Wayne SHIELD™ Web UI, go to the **Jobs** tab.
 
 4. Confirm that there is a **SHIELDdb** job:
 
-    ![installation-SHIELD-SHIELDdb-job](images/installation-SHIELD-SHIELDdb-job.png)
+    ![installation-SHIELD-SHIELDdb-job](images/installation-shield-shielddb-job.png)

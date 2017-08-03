@@ -9,7 +9,7 @@ title: Using the Stark & Wayne SHIELD™ Web UI
   Stores the destination of backup data, i.e. an S3 bucket, local file system directory, etc.
   Each record identifies a destination, the method by which to store and retrieve backup data to/from it ('plugin') and specific connection information required ('endpoint')
 
-  ![backup-pcf-archives](images/installation-SHIELD-default-backend.png)
+  ![backup-pcf-archives](/images/installation-shield-default-backend.png)
 
   For example we can configure a default storage backend with the fs plugin that will store the backup under "/tmp/to"
 
@@ -76,7 +76,7 @@ title: Using the Stark & Wayne SHIELD™ Web UI
 ##### Schedules
   Contains the timing information that informs the core daemon when it should run which backup jobs (or JOBS, see later).
 
-  ![backup-pcf-new-target](images/installation-SHIELD-default-schedule-full.png)
+  ![backup-pcf-new-target](images/installation-shield-default-schedule-full.png)
 
   For example we can configure a default that starts your backup each night at 3am
 
@@ -91,7 +91,7 @@ title: Using the Stark & Wayne SHIELD™ Web UI
 ##### Retention
   Policies govern how long data is kept. For now, this is just a simple expiration time, with 'name' and 'summary' fields for annotation.
 
-  ![backup-pcf-new-target](images/installation-SHIELD-default-retention-short-term.png)
+  ![backup-pcf-new-target](images/installation-shield-default-retention-short-term.png)
 
   For example we can configure a short-term rention of 90 days
 
