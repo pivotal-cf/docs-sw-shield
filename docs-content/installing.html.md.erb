@@ -1,28 +1,393 @@
 ---
-title: Installing and Configuring YOUR-PRODUCT-NAME
-owner: Partners
+title: Installing Stark & Wayne SHIELD™ to Pivotal Ops Manager
 ---
 
-This topic describes how to install and configure YOUR-PRODUCT-NAME.
+## <a id="requirements"></a>Requirements
 
-##<a id='install'></a> Install and Configure YOUR-PRODUCT-NAME
+* Pivotal Ops Manager&reg; version 1.9 or greater
+* Pivotal Cloud Foundry&reg; version 1.9 or greater
+* A Storage account to store the backup archives. Available options are:
+    * Amazon AWS S3
+    * A compatible Amazon AWS S3 system (like Ceph)
+    * Microsoft Azure
+    * Google Cloud Storage
 
-1. Download the product file from Pivotal Network.
+## <a id="upload-tile"></a>Upload tile
 
-1. Navigate to the Ops Manager Installation Dashboard and click **Import a Product** to upload the product file. 
+See [Downloads](download.html) for instructions for downloading the latest tile.
 
-1. Under the **Import a Product** button, click **+** next to the version number of YOUR-PRODUCT-NAME. 
-This adds the tile to your staging area.
+Click "Import a Product" on the left hand side of your Ops Manager dashboard. Select the `Stark & Wayne-SHIELD-x.y.z.pivotal` file to upload.
 
-1. Click the newly added **YOUR-PRODUCT-NAME** tile.
+The Stark & Wayne SHIELD™ product will appear in the "Available Products" list. Click "Add" to move it to the Installation Dashboard.
 
-1. **This portion of the procedure should tell the users how to configure the newly added tile by
-walking them through the sections. Which fields should they fill out? What are the different
-checkboxes? Include relevant screenshots here.** 
+The first time you upload/install the tile it will appear with a red lower border. This means it is not yet ready to be installed - there are mandatory configuration that you will need to provide. Notably, the default Archiving configuration.
 
-1. Click **Save**.
+![installation-SHIELD-tile](images/installation-SHIELD-tile.png)
 
-1. Return to the Ops Manager Installation Dashboard and click **Apply changes** to install YOUR-PRODUCT-NAME tile.
+## <a id="configuration"></a>Configuration
 
-**If needed, include additional configuration information below. For example, maybe there are
-configuration options not required for installation but which could be useful for certain users.**
+There are several panels of configuration for Stark & Wayne SHIELD™ that you need to configure.
+
+### <a id="configuration-azs-networks"></a>Assign AZs and Networks
+
+If you have configure more than one **network** at your **Ops Manager Director** you will be required to select which **network** must be used when installing this tile:
+
+![installation-SHIELD-azs-networks](images/installation-SHIELD-azs-networks.png)
+
+### <a id="configuration-archiving"></a>Archiving
+
+Stark & Wayne SHIELD™ product needs an external Storage system to store the backup archives. It also needs to know when to backup the different targets and how long
+should maintain the backup archives.
+
+1. In **Stark & Wayne SHIELD™ > Settings**, select **Archiving**.
+
+    ![installation-SHIELD-archiving](images/installation-SHIELD-archiving.png)
+
+2. Enter an **Environment** name for your SHIELD installation (ie: `production`).
+
+3. Enter a daemon **Name** for your SHIELD installation (ie: `pcf-SHIELD`).
+
+4. Enter the default **Schedule** (when it should run which backup jobs).
+
+5. Enter the default **Retention Policy** in days (how long archived data is kept).
+
+6. Choose the default **Central Archiving Storage** (where to store the backup archives).
+
+#### <a id="configuration-archiving-s3"></a>Amazon AWS S3 Bucket
+
+If you want to use an Amazon AWS S3 Bucket to store your backup archives, perform the following steps:
+
+1. At the Amazon AWS console, navigate to the **S3** service and create a **S3 Bucket**:
+
+    ![installation-SHIELD-s3-bucket](images/installation-SHIELD-s3-bucket.png)
+
+2. Navigate to the **IAM** service and create an **AWS IAM User** with **Programmatic access** type:
+
+    ![installation-SHIELD-s3-iam-user](images/installation-SHIELD-s3-iam-user.png)
+
+    **NOTE**: **Make sure you save the Secret Access Key somewhere secure**, like 1Password. Amazon AWS will be unable to give you it again if you misplace it -- your only recourse at that point is to generate a new set of keys and start over.
+
+3. Select the user, take note of the **User ARN** value, then click on **Add permissions** and select **Attach existing policies directly**. Click on **Create policy** and then **Create Your Own Policy**. Give the Policy a name like **Stark & WayneSHIELDPolicy** and in the **Policy Document** field add the following, substituting the **User ARN** and **Bucket Name** values with
+your values:
+
+    ```
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": "s3:ListAllMyBuckets",
+                "Resource": "arn:aws:iam::xxxxxxxxxxxx:user/zzzzz"
+            },
+            {
+                "Effect": "Allow",
+                "Action": "s3:*",
+                "Resource": [
+                    "arn:aws:s3:::your-bucket-name",
+                    "arn:aws:s3:::your-bucket-name/*"
+                ]
+            }
+        ]
+    }
+    ```
+
+4. In **Stark & Wayne SHIELD™ > Settings**, select **Amazon AWS S3 bucket**.
+
+    ![installation-SHIELD-archiving-s3](images/installation-SHIELD-archiving-s3.png)
+
+5. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | **AWS Access Key** | Specify the Access Key for AWS S3 |
+    | **AWS Secret Access Key** | Specify the Secret Access Key for AWS S3 |
+    | **AWS S3 Bucket Name** | Specify the shared AWS S3 Bucket for all backup files |
+    | **AWS S3 Bucket Path Prefix** | Optionally, specify if all backup files should be stored under this common path prefix |
+
+    **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
+
+6. Click **Save**.
+
+#### <a id="configuration-archiving-s3-compatible"></a>Amazon AWS S3 Compatible Bucket
+
+If you want to use a compatible AWS S3 Bucket (like Ceph) to store your backup archives, perform the following steps:
+
+1. At your compatible Amazon AWS S3 system, create a new user (and access keys) and a new bucket.
+
+2. In **Stark & Wayne SHIELD™ > Settings**, select **Amazon AWS S3 Compatible Bucket**.
+
+    ![installation-SHIELD-archiving-s3-compatible](images/installation-SHIELD-archiving-s3-compatible.png)
+
+3. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | **S3 API Hostname** | Specify the hostname for the S3 compatible API |
+    | **S3 API Port** | Specify the port for the S3 compatible API |
+    | **Skip SSL validation** | Check if SSL validation must be skipped when connecting to the S3 compatible API |
+    | **S3 Access Key** | Specify the Access Key for the S3 compatible API |
+    | **S3 Secret Access Key** | Specify the Secret Access Key for the S3 compatible API |
+    | **S3 Signature Version** | Select the signature version for the S3 compatible API |
+    | **S3 Bucket Name** | Specify the shared S3 Bucket for all backup files |
+    | **S3 Bucket Path Prefix** | Optionally, specify if all backup files should be stored under this common path prefix |
+    | **SOCKS5 proxy** | Optionally, specify the defined SOCKS5 proxy to use for the S3 compatible API connection |
+
+    **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
+
+4. Click **Save**.
+
+#### <a id="configuration-archiving-azure"></a>Microsoft Azure Container
+
+If you want to use a Microsoft Azure Container to store your backup archives, perform the following steps:
+
+1. At the Microsoft Azure Portal, navigate to the **Storage accounts tab**, and create an **Azure Storage Account**:
+
+    ![installation-SHIELD-azure-storage-account](images/installation-SHIELD-azure-storage-account.png)
+
+2. After the storage account is created, select the new storage account from the dashboard, navigate to the **Blob Service** section of the storage account, then click on **Containers**, and create a **Container**, setting the **Access type** to **Private**:
+
+    ![installation-SHIELD-azure-container](images/installation-SHIELD-azure-container.png)
+
+3. In **Stark & Wayne SHIELD™ > Settings**, select **Microsoft Azure Container**.
+
+    ![installation-SHIELD-archiving-azure](images/installation-SHIELD-archiving-azure.png)
+
+4. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | **Azure Account** | Specify the Account for Azure Storage |
+    | **Azure Account Key** | Specify the Account Key for Azure Storage |
+    | **Azure Storage Container Name** | Specify the shared Azure Storage Container for all backup files |
+
+    **NOTE**: Ensure that the Container has been created before clicking **Save**.
+
+#### <a id="configuration-archiving-google"></a>Google Cloud Storage Bucket
+
+If you want to use a Google Cloud Storage Bucket to store your backup archives, perform the following steps:
+
+1. At the Google Cloud Platform dashboard, navigate to the **IAM & Admin > Service Accounts** tab, and create a **Google Cloud Service Account** with **Storage Admin** privileges and **furnish a new JSON private key**:
+
+    ![installation-SHIELD-google-service-account](images/installation-SHIELD-google-service-account.png)
+
+2. At the Google Cloud Platform dashboard, under **Storage**, create a **Google Cloud Storage Bucket**:
+
+    ![installation-SHIELD-google-bucket](images/installation-SHIELD-google-bucket.png)
+
+3. In **Stark & Wayne SHIELD™ > Settings**, select **Google Cloud Storage Bucket**.
+
+    ![installation-SHIELD-archiving-google](images/installation-SHIELD-archiving-google.png)
+
+4. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | **Google Cloud Storage Service Account JSON Key** | Enter the contents of the Google Cloud Storage Service Account JSON Key file |
+    | **Google Cloud Storage Bucket Name** | Specify the shared Google Cloud Storage Bucket for all backup files |
+    | **Google Cloud Storage Bucket Path Prefix** | Optionally, specify if all backup files should be stored under this common path prefix |
+
+    **NOTE**: Ensure that the Bucket has been created before clicking **Save**.
+
+5. Click **Save**.
+
+### <a id="configuration-database"></a>Databases
+
+Stark & Wayne SHIELD™ product needs a database in order to store the archiving configuration.
+
+You can configure Stark & Wayne SHIELD™ to use the provided internal PostgreSQL database, or you can configure an external database provider for the databases (only MySQL and PostgreSQL are supported)
+
+  **NOTE**: If you are performing an upgrade, do not modify your existing database configuration or you may lose data. You must migrate your existing data first before changing the configuration. [Contact the Stark & Wayne Tiles™ team](contact.html) for help.
+
+#### <a id="configuration-database-internal"></a>Internal Database Configuration
+
+  **WARNING**: The internal PostgreSQL database provided with Stark & Wayne SHIELD™ is a single PostgreSQL instance (NOT highly-available).
+
+If you want to use internal databases for your deployment, perform the following steps:
+
+1. In **Stark & Wayne SHIELD™ > Settings**, select **Databases**.
+
+2. Select **Internal Databases (PostgreSQL NOT highly-available)**.
+
+    ![installation-SHIELD-database-internal](images/installation-SHIELD-database-internal.png)
+
+3. Click **Save**.
+
+#### <a id="configuration-database-mysql"></a>External MySQL Database
+
+  **NOTE**: The exact procedure to create databases depends upon the database provider you select for your deployment. The following procedure uses AWS RDS as an example. You can configure a different database provider that provides MySQL support, such as Google Cloud SQL.
+
+  **WARNING**: Protect whichever database you use in your deployment with a password.
+
+If you want to use external MySQL databases for your deployment, perform the following steps:
+
+1. Add the `ubuntu` account key pair from your IaaS deployment to your local SSH profile so you can access the Ops Manager VM. For example, in AWS, you add a key pair created in AWS:
+
+    ```
+    ssh-add aws-keypair.pem
+    ```
+
+2. SSH in to your Ops Manager using the Ops Manager FQDN and the username `ubuntu`:
+
+    ```
+    ssh ubuntu@OPS_MANAGER_FQDN
+    ```
+
+3. Log in to your MySQL database instance using the appropriate hostname and user login values configured in your IaaS account. For example, to log in to your AWS RDS instance, run the following MySQL command:
+
+    ```
+    mysql --host=RDSHOSTNAME --user=RDSUSERNAME --password=RDSPASSWORD
+    ```
+
+4. Run the following MySQL commands to create databases for the SHIELD components that require a relational database:
+
+    ```
+    CREATE database SHIELDdb;
+    ```
+
+5. Type `exit` to quit the MySQL client, and `exit` again to close your connection to the Ops Manager VM.
+
+6. In **Stark & Wayne SHIELD™ > Settings**, select **Databases**.
+
+7. Select **External MySQL Database**.
+
+    ![installation-SHIELD-database-mysql](images/installation-SHIELD-database-mysql.png)
+
+8. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | **Hostname DNS Name** | Specify the hostname of the database server |
+    | **TCP Port** | Specify the port of the database server |
+    | **Username** | Specify a unique username that can access this specific database on the database server |
+    | **Password** | Specify a password for the provided username |
+    | **Database Name** | Specify the database name on the database server |
+
+    **NOTE**: Ensure that the Database has been created before clicking **Save**.
+
+9. Click **Save**.
+
+#### <a id="configuration-database-postgresql"></a>External PostgreSQL Database
+
+  **NOTE**: The exact procedure to create databases depends upon the database provider you select for your deployment. The following procedure uses AWS RDS as an example. You can configure a different database provider that provides PostgreSQL support, such as Google Cloud SQL.
+
+  **WARNING**: Protect whichever database you use in your deployment with a password.
+
+If you want to use external PostgreSQL databases for your deployment, perform the following steps:
+
+1. Add the `ubuntu` account key pair from your IaaS deployment to your local SSH profile so you can access the Ops Manager VM. For example, in AWS, you add a key pair created in AWS:
+
+    ```
+    ssh-add aws-keypair.pem
+    ```
+
+2. SSH in to your Ops Manager using the Ops Manager FQDN and the username `ubuntu`:
+
+    ```
+    ssh ubuntu@OPS_MANAGER_FQDN
+    ```
+
+3. Log in to your PostgreSQL database instance using the appropriate hostname and user login values configured in your IaaS account. For example, to log in to your AWS RDS instance, run the following PostgreSQL command:
+
+    ```
+    psql --host=RDSHOSTNAME --username=RDSUSERNAME --password
+    ```
+
+4. Run the following PostgreSQL commands to create databases for the SHIELD components that require a relational database:
+
+    ```
+    CREATE database SHIELDdb;
+    ```
+
+5. Type `exit` to quit the PostgreSQL client, and `exit` again to close your connection to the Ops Manager VM.
+
+6. In **Stark & Wayne SHIELD™ > Settings**, select **Databases**.
+
+2. Select **External PostgreSQL Database**.
+
+    ![installation-SHIELD-database-postgresql](images/installation-SHIELD-database-postgresql.png)
+
+8. Complete the following fields:
+
+    | Field | Notes |
+    | --- | --- |
+    | **Hostname DNS Name** | Specify the hostname of the database server |
+    | **TCP Port** | Specify the port of the database server |
+    | **Username** | Specify a unique username that can access this specific database on the database server |
+    | **Password** | Specify a password for the provided username |
+    | **Database Name** | Specify the database name on the database server |
+
+    **NOTE**: Ensure that the Database has been created before clicking **Save**.
+
+9. Click **Save**.
+
+### <a id="configuration-stemcell"></a>Stemcell
+
+If required to upload a particular stemcell series, you can find the latest available stemcell at [Pivotal Network](https://network.pivotal.io/products/stemcells).
+
+![installation-SHIELD-stemcell](images/installation-SHIELD-stemcell.png)
+
+## <a id="installation"></a>Installation
+
+1. Return to the Ops Manager dashboard via the **< Installation Dashboard** link at the top left.
+
+2. The Stark & Wayne SHIELD™ tile is now green and is ready to be installed. Press **Apply Changes**.
+
+The install process generally requires several minutes to complete. The image shows the Changes Applied window that displays when the installation process successfully completes.
+
+![installation-SHIELD-completed](images/installation-SHIELD-completed.png)
+
+## <a id="verification"></a>Verification
+
+Stark & Wayne SHIELD™ Web UI should now be available at the `SHIELD` hostname in your system domain.
+
+1. The Stark & Wayne SHIELD™ Web UI is protected by a `username` and `password`. In **Stark & Wayne SHIELD™ > Credentials**, look for the **SHIELD Credentials**:
+
+    ![installation-SHIELD-credentials](images/installation-SHIELD-credentials.png)
+
+2. If you do not know the system domain for the deployment, then select **Pivotal Elastic Runtime > Settings > Domains** to locate the configured system domain.
+
+3. Open a browser and navigate to `SHIELD.YOUR-SYSTEM-DOMAIN`. For example, if the system domain is `system.example.com`, then point your browser to `SHIELD.system.example.com`.
+
+4. Log in using the SHIELD credentials for the `admin` user. The Stark & Wayne SHIELD™ dashboard appears.
+
+    ![installation-SHIELD-dashboard](images/installation-SHIELD-dashboard.png)
+
+### <a id="verification-storages"></a>Confirm default Storage
+
+1. At the Stark & Wayne SHIELD™ Web UI, go to the **Storage** tab.
+
+2. Confirm that there is a **default** storage:
+
+    ![installation-SHIELD-default-storage](images/installation-SHIELD-default-storage.png)
+
+### <a id="verification-rentention-policies"></a>Confirm default Retention Policy
+
+1. At the Stark & Wayne SHIELD™ Web UI, go to the **Retention** tab.
+
+2. Confirm that there is a **default** retention policy:
+
+    ![installation-SHIELD-default-retention-policy](images/installation-SHIELD-default-retention-policy.png)
+
+### <a id="verification-schedules"></a>Confirm default Schedule
+
+1. At the Stark & Wayne SHIELD™ Web UI, go to the **Schedules** tab.
+
+2. Confirm that there is a **default** storage:
+
+    ![installation-SHIELD-default-schedule](images/installation-SHIELD-default-schedule.png)
+
+### <a id="verification-SHIELDdb"></a>Confirm SHIELD database Target and Job
+
+  **NOTE**: If you are NOT using the **Internal Database** you can omit this step.
+
+1. At the Stark & Wayne SHIELD™ Web UI, go to the **Targets** tab.
+
+2. Confirm that there is a **SHIELDdb** target:
+
+    ![installation-SHIELD-SHIELDdb-target](images/installation-SHIELD-SHIELDdb-target.png)
+
+3. At the Stark & Wayne SHIELD™ Web UI, go to the **Jobs** tab.
+
+4. Confirm that there is a **SHIELDdb** job:
+
+    ![installation-SHIELD-SHIELDdb-job](images/installation-SHIELD-SHIELDdb-job.png)

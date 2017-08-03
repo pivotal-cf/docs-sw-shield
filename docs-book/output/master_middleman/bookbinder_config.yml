@@ -1,0 +1,20 @@
+---
+:archive_menu:
+  ".": 
+:production_host: hello
+:subnav_templates:
+  sw-shield: sw-shield_subnav
+:template_variables: 
+:local_repo_dir: "/Users/adambell/starkandwayne/docs-sw-shield"
+:workspace: !ruby/object:Pathname
+  path: "/Users/adambell/starkandwayne/docs-sw-shield/docs-book/output/master_middleman/source"
+:feedback_enabled: 
+:repo_link_enabled: true
+:repo_links:
+  sw-shield:
+    repo: docs-content
+    ref: master
+    at_path: 
+:product_info:
+  sw-shield: {}
+:elastic_search: false
