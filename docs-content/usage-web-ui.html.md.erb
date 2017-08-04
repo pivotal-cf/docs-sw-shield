@@ -5,6 +5,13 @@ title: Using the Stark & Wayne SHIELD™ Web UI
 
 ## Dashboard
 
+After you've installed and deployed the tile, you can visit the SHIELD Web UI which will look similar to:
+
+![webui-dashboard](/images/webui-dashboard.png)
+
+The URL for your SHIELD Web UI is `https://shield.[system domain]`.
+
+
 ##### Storage
   Stores the destination of backup data, i.e. an S3 bucket, local file system directory, etc.
   Each record identifies a destination, the method by which to store and retrieve backup data to/from it ('plugin') and specific connection information required ('endpoint')
@@ -19,7 +26,7 @@ title: Using the Stark & Wayne SHIELD™ Web UI
 
   * At the **Configuration (JSON)** field enter:
 
-  ```
+  ```json
   {
     {"base_dir":"/tmp/to"}
   }

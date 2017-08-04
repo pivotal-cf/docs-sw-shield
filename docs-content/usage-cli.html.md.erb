@@ -129,10 +129,12 @@ Find the SHIELD credentials in Ops Manager:
 
 The `-k` flag must be used when interacting with your SHIELD Daemon API if it has a self-signed SSL certificates.
 
+##
 
 ## Creating entities
 
 In order to set up a regularly running job in SHIELD you must create a number of entities:
+
 - schedule
 - retention-policy
 - store
@@ -140,6 +142,8 @@ In order to set up a regularly running job in SHIELD you must create a number of
 - job
 
 Each of these entities can be created interactively via the CLI by answering the questions presented.
+
+For example, to create a new retention policy:
 
 ```
 $ shield create-policy -k
