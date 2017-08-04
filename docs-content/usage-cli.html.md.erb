@@ -172,14 +172,14 @@ $ shield create-target -k
 Target Name: A Postgres DB
 Summary:
 Plugin Name: postgres
-Configuration: {"pg_host":"127.0.0.1","pg_password":"<password>","pg_port":"5432","pg_user":"vcap"}
+Configuration: {"pg_host":"127.0.0.1","pg_password":"[password]","pg_port":"5432","pg_user":"vcap"}
 Remote IP:port: 10.0.1.2:5444
 
 
 Target Name:    a-pg-db
 Summary:        Some PostgreSQL DB
 Plugin Name:    postgres
-Configuration:  {"pg_host":"127.0.0.1","pg_password":"<password>","pg_port":"5432","pg_user":"vcap"}
+Configuration:  {"pg_host":"127.0.0.1","pg_password":"[password]","pg_port":"5432","pg_user":"vcap"}
 Remote IP:port: 10.0.1.2:5444
 
 
@@ -190,7 +190,7 @@ Name:          a-pg-db
 Summary:       Some PostgreSQL DB
 
 Plugin:        postgres
-Configuration: {"pg_host":"127.0.0.1","pg_password":"<password>","pg_port":"5432","pg_user":"vcap"}
+Configuration: {"pg_host":"127.0.0.1","pg_password":"[password]","pg_port":"5432","pg_user":"vcap"}
 Remote IP:     10.0.1.2:5444
 ```
 
@@ -231,7 +231,7 @@ Expires in:       10 days
 Schedule Policy:  daily
 
 Target:           postgres
-Target Endpoint:  {"pg_host":"127.0.0.1","pg_password":"<password>","pg_port":"5432","pg_user":"vcap"}
+Target Endpoint:  {"pg_host":"127.0.0.1","pg_password":"[password]","pg_port":"5432","pg_user":"vcap"}
 Remote IP:        10.0.1.2:5444
 
 Store:            default
@@ -271,7 +271,7 @@ Log:          Validating environment...
               ✓ pg_host      127.0.0.1
               ✓ pg_port      5432
               ✓ pg_user      vcap
-              ✓ pg_password  <password>
+              ✓ pg_password  [password]
               ✓ pg_database  none (all databases will be backed up)
               OK
 
