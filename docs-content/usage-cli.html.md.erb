@@ -2,6 +2,27 @@
 title: Using the Stark & Wayne SHIELD™ CLI
 ---
 
+The primary method for configuring SHIELD is the `shield` CLI.
+
+## Installation
+
+On Ubuntu/Debian machines, such as the Ops Manager VM, you can install the `shield` CLI using `apt-get`:
+
+```
+wget -q -O - https://raw.githubusercontent.com/starkandwayne/homebrew-cf/master/public.key | apt-key add -
+echo "deb http://apt.starkandwayne.com stable main" | tee /etc/apt/sources.list.d/starkandwayne.list
+apt-get update
+
+apt-get install shield
+```
+
+On MacOS/OS X machines, you can install the `shield` CLI using our Homebrew tap:
+
+```
+brew tap starkandwayne/cf
+brew install starkandwayne/cf/shield
+```
+
 ## Help
 
 The SHIELD CLI is well documented and offers a detailed description of all available commands.
