@@ -241,7 +241,7 @@ If you want to use external MySQL databases for your deployment, perform the fol
 4. Run the following MySQL commands to create databases for the SHIELD components that require a relational database:
 
     ```
-    CREATE database SHIELDdb;
+    CREATE database shielddb;
     ```
 
 5. Type `exit` to quit the MySQL client, and `exit` again to close your connection to the Ops Manager VM.
@@ -295,7 +295,7 @@ If you want to use external PostgreSQL databases for your deployment, perform th
 4. Run the following PostgreSQL commands to create databases for the SHIELD components that require a relational database:
 
     ```
-    CREATE database SHIELDdb;
+    CREATE database shielddb;
     ```
 
 5. Type `exit` to quit the PostgreSQL client, and `exit` again to close your connection to the Ops Manager VM.
@@ -376,18 +376,18 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `shield` hostname 
 
     ![installation-shield-default-schedule](images/installation-shield-default-schedule.png)
 
-### <a id="verification-SHIELDdb"></a>Confirm SHIELD database Target and Job
+### <a id="verification-shielddb"></a>Confirm SHIELD database Target and Job
 
   **NOTE**: If you are NOT using the **Internal Database** you can omit this step.
 
 1. At the Stark & Wayne SHIELD™ Web UI, go to the **Targets** tab.
 
-2. Confirm that there is a **SHIELDdb** target:
+2. Confirm that there is a **shielddb** target:
 
-    ![installation-shield-SHIELDdb-target](images/installation-shield-shielddb-target.png)
+    ![installation-shield-shielddb-target](images/installation-shield-shielddb-target.png)
 
 3. At the Stark & Wayne SHIELD™ Web UI, go to the **Jobs** tab.
 
-4. Confirm that there is a **SHIELDdb** job:
+4. Confirm that there is a **shielddb** job:
 
-    ![installation-shield-SHIELDdb-job](images/installation-shield-shielddb-job.png)
+    ![installation-shield-shielddb-job](images/installation-shield-shielddb-job.png)
