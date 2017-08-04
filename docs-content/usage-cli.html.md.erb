@@ -25,16 +25,16 @@ brew install starkandwayne/cf/shield
 
 ## Help
 
-The SHIELD CLI is well documented and offers a detailed description of all available commands.
+The `shield` CLI is well documented and offers a detailed description of all available commands.
 To see the list of commands:
 
 ```
-$ SHIELD commands
+$ shield commands
 NAME:
-  SHIELD                CLI for interacting with the SHIELD API.
+  shield                CLI for interacting with the SHIELD API.
 
 USAGE:
-  SHIELD [options] <command>
+  shield [options] <command>
 
 ENVIRONMENT VARIABLES:
   SHIELD_TRACE          set to 'true' for trace output.
@@ -65,8 +65,8 @@ COMMANDS:
 To see the explanation of a specific command:
 
 ```
-$ SHIELD help create-target
-SHIELD create-target [-k] [--raw]
+$ shield help create-target
+shield create-target [-k] [--raw]
 Create a new backup target
 
 ALIASES
@@ -99,14 +99,14 @@ RAW OUTPUT
 
 ## Creating a backend
 
-To interact with a deployed SHIELD via the cli first we must create a backend that is pointing to the SHIELD Daemon endpoint:
+To interact with your deployed SHIELD via the cli first we must target the SHIELD Daemon endpoint. With respect to the `shield` CLI this is called a "backend".
 
 ```
-$ SHIELD create-backend prod https://10.0.1.32
+$ shield create-backend prod https://10.0.1.32
 Successfully created backend 'prod', pointing to 'https://10.0.1.32'
 
-Using https://10.0.1.32 (prod) as SHIELD backend---
-$ SHIELD status -k
+Using https://10.0.1.32 (prod) as shield backend---
+$ shield status -k
 Name:        S.H.I.E.L.D. Alpha
 API Version: 0.10.8
 ```
@@ -125,7 +125,7 @@ In order to set up a regularly running job in SHIELD you must create a number of
 Each of these entities can be created interactively via the CLI by answering the questions presented.
 
 ```
-$ SHIELD create-policy -k
+$ shield create-policy -k
 Policy Name: daily
 Summary:
 Retention Timeframe, in days: 10
@@ -147,7 +147,7 @@ Expiration: 10 days
 For the store and target entities a plugin and its configuration must be specified. The plugin configuration must be valid JSON:
 
 ```
-$ SHIELD create-target -k
+$ shield create-target -k
 Target Name: A Postgres DB
 Summary:
 Plugin Name: postgres
@@ -180,7 +180,7 @@ Notice that the `pg_host` is set to `127.0.0.1` in the plugin configuration and 
 Once all of the entities have been created the job combines everything into a task that the Daemon will perform:
 
 ```
-$ SHIELD create-job -k
+$ shield create-job -k
 Job Name: db-backup
 Summary:
 Store: default
@@ -222,10 +222,10 @@ Notes:
 The job will be run at the time specified in the schedule. It can also be triggered manually from the CLI via:
 
 ```
-$ SHIELD run -k db-backup
+$ shield run -k db-backup
 Scheduled immediate run of job
-To view task, type SHIELD task d5c43e4b-fbcb-4376-ae43-2286e79029ac
-$ SHIELD task d5c43e4b-fbcb-4376-ae43-2286e79029ac -k
+To view task, type shield task d5c43e4b-fbcb-4376-ae43-2286e79029ac
+$ shield task d5c43e4b-fbcb-4376-ae43-2286e79029ac -k
 UUID:         d5c43e4b-fbcb-4376-ae43-2286e79029ac
 Owner:        jcarter@
 Type:         backup
@@ -265,7 +265,7 @@ Log:          Validating environment...
               =============================================
 
               EXITING 0
-$ SHIELD archives -k
+$ shield archives -k
 UUID                                  Target                     Restore IP     Store                     Taken at                         Expires at                       Status  Notes
 ====                                  ======                     ==========     =====                     ========                         ==========                       ======  =====
 257b9f5f-c241-4aad-8a00-74de90e40220  a-pg-db (postgres)         10.0.1.2:5444  default (google)          Tue, 11 Jul 2017 14:35:05 +0000  Fri, 21 Jul 2017 14:35:05 +0000  valid
@@ -273,10 +273,10 @@ UUID                                  Target                     Restore IP     
 
 ## Scripting
 
-The SHIELD CLI is easy to use in scripts by adding the `--raw` flag. This will make the CLI accept JSON formatted configuration piped from Stdin and output configuration via JSON so that it can be further used by other tools.
+The `shield` CLI is easy to use in scripts by adding the `--raw` flag. This will make the CLI accept JSON formatted configuration piped from Stdin and output configuration via JSON so that it can be further used by other tools.
 
 ```
 $ echo '{"endpoint":"{\"bucket\":\"backups\"}","name":"default","plugin":"google"}' | \
-> SHIELD --raw create-store -k
+> shield --raw create-store -k
 {"uuid":"71aac644-ad3f-4a9c-91e6-da4fd9e4815d","name":"default","summary":"","plugin":"google","endpoint":"{\"bucket\":\"backups\"}"}
 ```

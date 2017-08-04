@@ -8,7 +8,7 @@ The SHIELD CLI is well documented and offers a detailed description of all avail
 To see the list of commands:
 
 ```
-$ SHIELD commands
+$ shield commands
 NAME:
   SHIELD                CLI for interacting with the SHIELD API.
 
@@ -44,7 +44,7 @@ COMMANDS:
 To see the explanation of a specific command:
 
 ```
-$ SHIELD help create-target
+$ shield help create-target
 SHIELD create-target [-k] [--raw]
 Create a new backup target
 
@@ -81,11 +81,11 @@ RAW OUTPUT
 To interact with a deployed SHIELD via the cli first we must create a backend that is pointing to the SHIELD Daemon endpoint:
 
 ```
-$ SHIELD create-backend prod https://10.0.1.32
+$ shield create-backend prod https://10.0.1.32
 Successfully created backend 'prod', pointing to 'https://10.0.1.32'
 
 Using https://10.0.1.32 (prod) as SHIELD backend---
-$ SHIELD status -k
+$ shield status -k
 Name:        S.H.I.E.L.D. Alpha
 API Version: 0.10.8
 ```
@@ -104,7 +104,7 @@ In order to set up a regularly running job in SHIELD you must create a number of
 Each of these entities can be created interactively via the CLI by answering the questions presented.
 
 ```
-$ SHIELD create-policy -k
+$ shield create-policy -k
 Policy Name: daily
 Summary:
 Retention Timeframe, in days: 10
@@ -126,7 +126,7 @@ Expiration: 10 days
 For the store and target entities a plugin and its configuration must be specified. The plugin configuration must be valid JSON:
 
 ```
-$ SHIELD create-target -k
+$ shield create-target -k
 Target Name: A Postgres DB
 Summary:
 Plugin Name: postgres
@@ -159,7 +159,7 @@ Notice that the `pg_host` is set to `127.0.0.1` in the plugin configuration and 
 Once all of the entities have been created the job combines everything into a task that the Daemon will perform:
 
 ```
-$ SHIELD create-job -k
+$ shield create-job -k
 Job Name: db-backup
 Summary:
 Store: default
@@ -201,10 +201,10 @@ Notes:
 The job will be run at the time specified in the schedule. It can also be triggered manually from the CLI via:
 
 ```
-$ SHIELD run -k db-backup
+$ shield run -k db-backup
 Scheduled immediate run of job
 To view task, type SHIELD task d5c43e4b-fbcb-4376-ae43-2286e79029ac
-$ SHIELD task d5c43e4b-fbcb-4376-ae43-2286e79029ac -k
+$ shield task d5c43e4b-fbcb-4376-ae43-2286e79029ac -k
 UUID:         d5c43e4b-fbcb-4376-ae43-2286e79029ac
 Owner:        jcarter@
 Type:         backup
@@ -244,7 +244,7 @@ Log:          Validating environment...
               =============================================
 
               EXITING 0
-$ SHIELD archives -k
+$ shield archives -k
 UUID                                  Target                     Restore IP     Store                     Taken at                         Expires at                       Status  Notes
 ====                                  ======                     ==========     =====                     ========                         ==========                       ======  =====
 257b9f5f-c241-4aad-8a00-74de90e40220  a-pg-db (postgres)         10.0.1.2:5444  default (google)          Tue, 11 Jul 2017 14:35:05 +0000  Fri, 21 Jul 2017 14:35:05 +0000  valid
