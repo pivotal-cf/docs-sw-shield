@@ -3,7 +3,7 @@
   ".": 
 :production_host: hello
 :subnav_templates:
-  sw-shield: starkandwayne_shield_subnav
+  starkandwayne-shield: starkandwayne_shield_subnav
 :template_variables: 
 :local_repo_dir: "/Users/drnic/Projects/dingo-projects/docs-sw-shield"
 :workspace: !ruby/object:Pathname
@@ -11,10 +11,10 @@
 :feedback_enabled: 
 :repo_link_enabled: true
 :repo_links:
-  sw-shield:
+  starkandwayne-shield:
     repo: docs-content
     ref: master
     at_path: 
 :product_info:
-  sw-shield: {}
+  starkandwayne-shield: {}
 :elastic_search: false

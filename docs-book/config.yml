@@ -16,7 +16,7 @@ public_host: hello
 sections:
   - repository:
       name: docs-content
-    directory: sw-shield
+    directory: starkandwayne-shield
     subnav_template: starkandwayne_shield_subnav.erb
 
 template_variables:                             # optional
