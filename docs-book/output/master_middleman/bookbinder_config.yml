@@ -5,9 +5,9 @@
 :subnav_templates:
   starkandwayne-shield: starkandwayne_shield_subnav
 :template_variables: 
-:local_repo_dir: "/Users/drnic/Projects/dingo-projects/docs-sw-shield"
+:local_repo_dir: "/Users/drnic/Projects/dingo-projects/docs-starkandwayne-shield"
 :workspace: !ruby/object:Pathname
-  path: "/Users/drnic/Projects/dingo-projects/docs-sw-shield/docs-book/output/master_middleman/source"
+  path: "/Users/drnic/Projects/dingo-projects/docs-starkandwayne-shield/docs-book/output/master_middleman/source"
 :feedback_enabled: 
 :repo_link_enabled: true
 :repo_links:
