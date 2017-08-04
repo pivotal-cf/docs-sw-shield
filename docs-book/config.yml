@@ -17,7 +17,7 @@ sections:
   - repository:
       name: docs-content
     directory: sw-shield
-    subnav_template: sw-shield_subnav.erb       
+    subnav_template: starkandwayne_shield_subnav.erb
 
 template_variables:                             # optional
 
