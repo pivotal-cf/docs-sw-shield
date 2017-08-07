@@ -1,1 +1,4 @@
+/docs-book/output/
+/docs-book/final_app
+*.log
 .DS_Store
