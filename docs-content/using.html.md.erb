@@ -1,15 +1,261 @@
 ---
-title: Using YOUR-PRODUCT-NAME
-owner: Partners
+title: Using the Stark & Wayne SHIELD™ CLI
 ---
 
-This topic describes how to use YOUR-PRODUCT-NAME.
+## Help
 
-##<a id='using'></a> Using YOUR-PRODUCT-NAME
+The SHIELD CLI is well documented and offers a detailed description of all available commands.
+To see the list of commands:
 
-**This topic should include any instructions for how to use the service or dashboard created by the tile. 
-Give procedures for how to perform the different functions offered by your product and provide screenshots where necessary.** 
+```
+$ shield commands
+NAME:
+  SHIELD                CLI for interacting with the SHIELD API.
 
-**You can also use this section to include information about Architecture and Troubleshooting for known errors. 
-If you include a Troubleshooting section, follow the Symptom/Explanation format used in the 
-[Okta Troubleshooting](http://docs.pivotal.io/p-identity/okta/troubleshooting.html) topic**.
+USAGE:
+  SHIELD [options] <command>
+
+ENVIRONMENT VARIABLES:
+  SHIELD_TRACE          set to 'true' for trace output.
+  SHIELD_DEBUG          set to 'true' for debug output.
+
+COMMANDS:
+
+  INFO:
+  help              Get detailed help with a specific command
+  commands          Show the list of available commands
+  flags             Show the list of all command line flags
+  status            Query the SHIELD backup server for its status and version info SHIELD commands
+
+  BACKENDS:
+  backends          List configured SHIELD backends
+  create-backend    Create or modify a SHIELD backend
+  backend           Select a particular backend for use
+
+  TARGETS:
+  targets           List available backup targets
+  target            Print detailed information about a specific backup target
+  create-target     Create a new backup target
+  edit-target       Modify an existing backup target
+  delete-target     Delete a backup target
+(...)
+```
+
+To see the explanation of a specific command:
+
+```
+$ shield help create-target
+SHIELD create-target [-k] [--raw]
+Create a new backup target
+
+ALIASES
+  add target, c t, create new target, create target, create-target, make target, new target
+
+FLAGS
+  -k, --skip-ssl-validation  Disable SSL certificate validation
+  --raw                      Takes input as a JSON object from standard input
+                             Outputs the resultant target info as a JSON object
+
+RAW INPUT
+{
+  "agent": "127.0.0.1:1234",
+  "endpoint": "{\"endpoint\":\"schmendpoint\"}",
+  "name": "TestTarget",
+  "plugin": "postgres",
+  "summary": "A Test Target"
+}
+
+RAW OUTPUT
+{
+  "uuid": "77398f3e-2a31-4f20-b3f7-49d3f0998712",
+  "name": "TestTarget",
+  "summary": "A Test Target",
+  "plugin": "postgres",
+  "endpoint": "{\"endpoint\":\"schmendpoint\"}",
+  "agent": "127.0.0.1:1234"
+} SHIELD help target
+```
+
+## Creating a backend
+
+To interact with a deployed SHIELD via the cli first we must create a backend that is pointing to the SHIELD Daemon endpoint:
+
+```
+$ shield create-backend prod https://10.0.1.32
+Successfully created backend 'prod', pointing to 'https://10.0.1.32'
+
+Using https://10.0.1.32 (prod) as SHIELD backend---
+$ shield status -k
+Name:        S.H.I.E.L.D. Alpha
+API Version: 0.10.8
+```
+
+The `-k` flag can be used when interacting with a SHIELD Daemon deployed with self-signed ssl certificates to skip validation.
+
+## Creating entities
+
+In order to set up a regularly running job in SHIELD you must create a number of entities:
+- schedule
+- retention-policy
+- store
+- target
+- job
+
+Each of these entities can be created interactively via the CLI by answering the questions presented.
+
+```
+$ shield create-policy -k
+Policy Name: daily
+Summary:
+Retention Timeframe, in days: 10
+
+
+Policy Name:                  daily
+Summary:
+Retention Timeframe, in days: 10
+
+
+Really create this retention policy? [y/n] y
+
+Created new retention policy
+Name:       daily
+Summary:
+Expiration: 10 days
+```
+
+For the store and target entities a plugin and its configuration must be specified. The plugin configuration must be valid JSON:
+
+```
+$ shield create-target -k
+Target Name: A Postgres DB
+Summary:
+Plugin Name: postgres
+Configuration: {"pg_host":"127.0.0.1","pg_password":"[password]","pg_port":"5432","pg_user":"vcap"}
+Remote IP:port: 10.0.1.2:5444
+
+
+Target Name:    a-pg-db
+Summary:        Some PostgreSQL DB
+Plugin Name:    postgres
+Configuration:  {"pg_host":"127.0.0.1","pg_password":"[password]","pg_port":"5432","pg_user":"vcap"}
+Remote IP:port: 10.0.1.2:5444
+
+
+Really create this target? [y/n] y
+
+Created new target
+Name:          a-pg-db
+Summary:       Some PostgreSQL DB
+
+Plugin:        postgres
+Configuration: {"pg_host":"127.0.0.1","pg_password":"[password]","pg_port":"5432","pg_user":"vcap"}
+Remote IP:     10.0.1.2:5444
+```
+
+Notice that the `pg_host` is set to `127.0.0.1` in the plugin configuration and the `Remote Ip` is set to `10.0.1.2:5444`. In this case it is assumed that the SHIELD Agent performing the backup is colocated on the same VM as the PostgreSQL database. The Agent is listening on `10.0.1.2:5444` and the database will be reachable via localhost on that VM. When the backup is run the SHIELD Daemon will contact the remotely running Agent and pass the configuration which will be used to execute the plugin.
+
+## Setting up a job
+
+Once all of the entities have been created the job combines everything into a task that the Daemon will perform:
+
+```
+$ shield create-job -k
+Job Name: db-backup
+Summary:
+Store: default
+Target: a-pg-db
+Retention Policy: default
+Schedule: daily
+Paused? (no):
+
+Job Name:         db-backup
+Summary:
+Store:            default (f2f926c9-4b02-405a-b92e-b5ebed4963f3)
+Target:           a-pg-db (81a362ea-4272-4d61-bb36-745445419456)
+Retention Policy: default (2d474753-22f1-461c-a9c5-8ca37916ea03)
+Schedule:         daily (2f8ccadb-58cd-458d-8992-1cfa226ddba8)
+Paused?:          false
+
+
+Really create this backup job? [y/n] y
+
+Created new job
+Name:             db-backup
+Paused:           N
+
+Retention Policy: default
+Expires in:       10 days
+
+Schedule Policy:  daily
+
+Target:           postgres
+Target Endpoint:  {"pg_host":"127.0.0.1","pg_password":"[password]","pg_port":"5432","pg_user":"vcap"}
+Remote IP:        10.0.1.2:5444
+
+Store:            default
+Store Endpoint:   {"bucket":"backups"}
+
+Notes:
+```
+
+The job will be run at the time specified in the schedule. It can also be triggered manually from the CLI via:
+
+```
+$ shield run -k db-backup
+Scheduled immediate run of job
+To view task, type SHIELD task d5c43e4b-fbcb-4376-ae43-2286e79029ac
+$ shield task d5c43e4b-fbcb-4376-ae43-2286e79029ac -k
+UUID:         d5c43e4b-fbcb-4376-ae43-2286e79029ac
+Owner:        jcarter@
+Type:         backup
+Status:       done
+
+Started at:   Tue, 11 Jul 2017 14:35:04 +0000
+Stopped at:   Tue, 11 Jul 2017 14:35:05 +0000
+Job:          db-backup (424df006-457d-4037-be2e-bd3e8f9f4396)
+Archive UUID: 257b9f5f-c241-4aad-8a00-74de90e40220
+
+Log:          Validating environment...
+              =========================
+              SHIELD_OP ... found
+              SHIELD_STORE_PLUGIN ... found
+              SHIELD_STORE_ENDPOINT ... found
+              SHIELD_TARGET_PLUGIN ... found
+              SHIELD_TARGET_ENDPOINT ... found
+              OK
+
+              Validating TARGET plugin `postgres`...
+              ======================================
+              ✓ pg_host      127.0.0.1
+              ✓ pg_port      5432
+              ✓ pg_user      vcap
+              ✓ pg_password  [password]
+              ✓ pg_database  none (all databases will be backed up)
+              OK
+
+              Validating STORE plugin `default`...
+              ===================================
+              ✓ json_key     (using Google Application Default Credentials)
+              ✓ bucket       backups
+              ✓ prefix       (none)
+              OK
+
+              Running backup task (using bzip2 compression)
+              =============================================
+
+              EXITING 0
+$ shield archives -k
+UUID                                  Target                     Restore IP     Store                     Taken at                         Expires at                       Status  Notes
+====                                  ======                     ==========     =====                     ========                         ==========                       ======  =====
+257b9f5f-c241-4aad-8a00-74de90e40220  a-pg-db (postgres)         10.0.1.2:5444  default (google)          Tue, 11 Jul 2017 14:35:05 +0000  Fri, 21 Jul 2017 14:35:05 +0000  valid
+```
+
+## Scripting
+
+The SHIELD CLI is easy to use in scripts by adding the `--raw` flag. This will make the CLI accept JSON formatted configuration piped from Stdin and output configuration via JSON so that it can be further used by other tools.
+
+```
+$ echo '{"endpoint":"{\"bucket\":\"backups\"}","name":"default","plugin":"google"}' | \
+> SHIELD --raw create-store -k
+{"uuid":"71aac644-ad3f-4a9c-91e6-da4fd9e4815d","name":"default","summary":"","plugin":"google","endpoint":"{\"bucket\":\"backups\"}"}
+```

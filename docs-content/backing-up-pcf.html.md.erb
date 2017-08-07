@@ -1,0 +1,97 @@
+---
+title: Backing up Pivotal Cloud Foundry&reg; databases
+---
+
+  **NOTE**: The exact procedure to back up Pivotal Cloud Foundry&reg; databases depends upon the database provider you select for your deployment. The following procedure assumes **Internal Databases - MySQL** as an example.
+
+## <a id="configuration"></a>Configuration
+
+There are two SHIELD components that we need to configure.
+
+### <a id="configuring-targets"></a>Targets
+
+SHIELD Targets stores the information about the remote data systems that should be backed up.
+
+Perform the following steps in order to create **Targets** for the Pivotal Cloud Foundry&reg; databases:
+
+1. In Pivotal Ops Manager, navigate to **Pivotal Elastic Runtime > Credentials** and grab the **MySQL Admin Credentials**:
+
+    ![backup-pcf-mysql](images/backup-pcf-mysql-credentials.png)
+
+2. Navigate to **Stark & Wayne SHIELD™ > Status** tab and grab the **IP address** of the **SHIELD VM**:
+
+    ![backup-pcf-shield-ip](images/backup-pcf-shield-ip.png)
+
+3. Open a new browser tab and navigate to the Stark & Wayne SHIELD™ Web UI (`https://shield.[system domain]`), click on the **Targets** tab.
+
+4. There are four Pivotal Cloud Foundry&reg; databases that we should backup:
+    * `ccdb`: holds the **Cloud Controller** component data
+    * `diego`: holds the **Diego** component data
+    * `routing`: holds the **TCP Routing** component data
+    * `uaa`: holds the **UAA** component data
+
+5. Create a new **Target** for each of the above four databases:
+
+    ![backup-pcf-new-target](images/backup-pcf-new-target.png)
+
+  * At the **Target Name** field enter the name of the database (ie: `ccdb`).
+
+  * At the **Summary** field enter a short description (ie: `Cloud Foundry Internal MySQL CC Database`).
+
+  * At the **Plugin Name** field enter `mysql`.
+
+  * At the **Configuration (JSON)** field enter:
+
+  ```
+  {
+    "mysql_host": "mysql.service.cf.internal",
+    "mysql_port": "3306",
+    "mysql_user": "MySQL Admin USERNAME",
+    "mysql_password": "MySQL Admin PASSWORD",
+    "mysql_database": "DATABASE NAME"
+  }
+  ```
+
+  * At the **Remote IP:port** field enter the **SHIELD VM IP Address** followed by `:5444` (ie: `10.213.10.57:5444`)
+
+  * Click on `Create`.
+
+### <a id="configuring-jobs"></a>Jobs
+
+SHIELD Jobs keeps track of a desired backup behavior, by marrying a target (the data to backup) with a store (where to send that data), according to a schedule (when to do the backups) and a retention policy (how long to keep the data for).
+
+Perform the following steps in order to create **Jobs** for the Pivotal Cloud Foundry&reg; databases:
+
+1. At the Stark & Wayne SHIELD™ Web UI, click on the **Jobs** tab.
+
+2. We need to create a **Job** for each of the four Pivotal Cloud Foundry&reg; databases:
+
+    ![backup-pcf-new-job](images/backup-pcf-new-job.png)
+
+  * At the **Job Name** field enter the name of the database (ie: `ccdb`).
+
+  * At the **Target System** field select the desired target (ie: `ccdb`).
+
+  * At the **Storage Backend** field select the desired storage (ie: `default`).
+
+  * At the **Schedule** field select the desired schedule (ie: `default`).
+
+  * At the **Retention Policy** field select the desired retention policy (ie: `default`).
+
+  * Click on `Create`.
+
+## <a id="verification"></a>Verification
+
+1. At the Stark & Wayne SHIELD™ Web UI, click on the **Jobs** tab. You should be able to see the four Jobs we created previously.
+
+2. For each of them schedule an immediate run of the backup job by clicking on the left icon next to each job name:
+
+    ![backup-pcf-jobs](images/backup-pcf-jobs.png)
+
+3. Click on the **Dashboard** tab, and check that the **Status** of the **Completed Tasks** is **done**:
+
+    ![backup-pcf-done-tasks](images/backup-pcf-done-tasks.png)
+
+4. Click on the **Backups** tab, for each of the **Target Systems** you should be able to see the existing archives:
+
+    ![backup-pcf-archives](images/backup-pcf-archives.png)
