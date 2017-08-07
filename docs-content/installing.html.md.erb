@@ -4,9 +4,9 @@ title: Installing Stark & Wayne SHIELD™ to Pivotal Ops Manager
 
 ## <a id="requirements"></a>Requirements
 
-* Pivotal Ops Manager&reg; version 1.9 or greater
-* Pivotal Cloud Foundry&reg; version 1.9 or greater
-* [Redis for PCF&reg;](https://network.pivotal.io/products/p-redis/)
+* Pivotal Ops Manager version 1.9 or greater
+* Pivotal Cloud Foundry version 1.9 or greater
+* [Redis for PCF](https://network.pivotal.io/products/p-redis/)
 * A Storage account to store the backup archives. Available options are:
     * Amazon AWS S3
     * A compatible Amazon AWS S3 system (like Ceph)
@@ -15,7 +15,7 @@ title: Installing Stark & Wayne SHIELD™ to Pivotal Ops Manager
 
 ## <a id="redis"></a>Install Redis for PCF
 
-Before you attempt to install Stark & Wayne SHIELD™, please successfully install [Redis for PCF](https://network.pivotal.io/products/p-redis/). Installation instructions are available at http://docs.pivotal.io/redis/1-9/
+Before you attempt to install Stark & Wayne SHIELD, please successfully install [Redis for PCF](https://network.pivotal.io/products/p-redis/). Installation instructions are available at http://docs.pivotal.io/redis/1-9/
 
 ![installation-redis-pcf](images/installation-redis-pcf.png)
 
@@ -33,7 +33,7 @@ The first time you upload/install the tile it will appear with a red lower borde
 
 ## <a id="configuration"></a>Configuration
 
-There are several panels of configuration for Stark & Wayne SHIELD™ that you need to configure.
+There are several panels of configuration for Stark & Wayne SHIELD that you need to configure.
 
 ### <a id="configuration-azs-networks"></a>Assign AZs and Networks
 
@@ -43,7 +43,7 @@ If you have configure more than one **network** at your **Ops Manager Director**
 
 ### <a id="configuration-archiving"></a>Archiving
 
-Stark & Wayne SHIELD™ product needs an external Storage system to store the backup archives. It also needs to know when to backup the different targets and how long
+Stark & Wayne SHIELD product needs an external Storage system to store the backup archives. It also needs to know when to backup the different targets and how long
 should maintain the backup archives.
 
 1. In **Stark & Wayne SHIELD™ > Settings**, select **Archiving**.
@@ -98,7 +98,7 @@ your values:
     }
     ```
 
-4. In **Stark & Wayne SHIELD™ > Settings**, select **Amazon AWS S3 bucket**.
+4. In **Stark & Wayne SHIELD > Settings**, select **Amazon AWS S3 bucket**.
 
     ![installation-shield-archiving-s3](images/installation-shield-archiving-s3.png)
 
@@ -121,7 +121,7 @@ If you want to use a compatible AWS S3 Bucket (like Ceph) to store your backup a
 
 1. At your compatible Amazon AWS S3 system, create a new user (and access keys) and a new bucket.
 
-2. In **Stark & Wayne SHIELD™ > Settings**, select **Amazon AWS S3 Compatible Bucket**.
+2. In **Stark & Wayne SHIELD > Settings**, select **Amazon AWS S3 Compatible Bucket**.
 
     ![installation-shield-archiving-s3-compatible](images/installation-shield-archiving-s3-compatible.png)
 
@@ -155,7 +155,7 @@ If you want to use a Microsoft Azure Container to store your backup archives, pe
 
     ![installation-shield-azure-container](images/installation-shield-azure-container.png)
 
-3. In **Stark & Wayne SHIELD™ > Settings**, select **Microsoft Azure Container**.
+3. In **Stark & Wayne SHIELD > Settings**, select **Microsoft Azure Container**.
 
     ![installation-shield-archiving-azure](images/installation-shield-archiving-azure.png)
 
@@ -181,7 +181,7 @@ If you want to use a Google Cloud Storage Bucket to store your backup archives, 
 
     ![installation-shield-google-bucket](images/installation-shield-google-bucket.png)
 
-3. In **Stark & Wayne SHIELD™ > Settings**, select **Google Cloud Storage Bucket**.
+3. In **Stark & Wayne SHIELD > Settings**, select **Google Cloud Storage Bucket**.
 
     ![installation-shield-archiving-google](images/installation-shield-archiving-google.png)
 
@@ -199,9 +199,9 @@ If you want to use a Google Cloud Storage Bucket to store your backup archives, 
 
 ### <a id="configuration-database"></a>Databases
 
-Stark & Wayne SHIELD™ product needs a database in order to store the archiving configuration.
+Stark & Wayne SHIELD product needs a database in order to store the archiving configuration.
 
-You can configure Stark & Wayne SHIELD™ to use the provided internal PostgreSQL database, or you can configure an external database provider for the databases (only MySQL and PostgreSQL are supported)
+You can configure Stark & Wayne SHIELD to use the provided internal PostgreSQL database, or you can configure an external database provider for the databases (only MySQL and PostgreSQL are supported)
 
   **NOTE**: If you are performing an upgrade, do not modify your existing database configuration or you may lose data. You must migrate your existing data first before changing the configuration. [Contact the Stark & Wayne Tiles™ team](contact.html) for help.
 
@@ -211,7 +211,7 @@ You can configure Stark & Wayne SHIELD™ to use the provided internal PostgreSQ
 
 If you want to use internal databases for your deployment, perform the following steps:
 
-1. In **Stark & Wayne SHIELD™ > Settings**, select **Databases**.
+1. In **Stark & Wayne SHIELD > Settings**, select **Databases**.
 
 2. Select **Internal Databases (PostgreSQL NOT highly-available)**.
 
@@ -253,7 +253,7 @@ If you want to use external MySQL databases for your deployment, perform the fol
 
 5. Type `exit` to quit the MySQL client, and `exit` again to close your connection to the Ops Manager VM.
 
-6. In **Stark & Wayne SHIELD™ > Settings**, select **Databases**.
+6. In **Stark & Wayne SHIELD > Settings**, select **Databases**.
 
 7. Select **External MySQL Database**.
 
@@ -307,7 +307,7 @@ If you want to use external PostgreSQL databases for your deployment, perform th
 
 5. Type `exit` to quit the PostgreSQL client, and `exit` again to close your connection to the Ops Manager VM.
 
-6. In **Stark & Wayne SHIELD™ > Settings**, select **Databases**.
+6. In **Stark & Wayne SHIELD > Settings**, select **Databases**.
 
 2. Select **External PostgreSQL Database**.
 
@@ -337,7 +337,7 @@ If required to upload a particular stemcell series, you can find the latest avai
 
 1. Return to the Ops Manager dashboard via the **< Installation Dashboard** link at the top left.
 
-2. The Stark & Wayne SHIELD™ tile is now green and is ready to be installed. Press **Apply Changes**.
+2. The Stark & Wayne SHIELD tile is now green and is ready to be installed. Press **Apply Changes**.
 
 The install process generally requires several minutes to complete. The image shows the Changes Applied window that displays when the installation process successfully completes.
 
@@ -345,9 +345,9 @@ The install process generally requires several minutes to complete. The image sh
 
 ## <a id="verification"></a>Verification
 
-Stark & Wayne SHIELD™ Web UI should now be available at the `shield` hostname in your system domain, `https://shield.[system domain]`.
+Stark & Wayne SHIELD Web UI should now be available at the `shield` hostname in your system domain, `https://shield.[system domain]`.
 
-1. The Stark & Wayne SHIELD™ Web UI is protected by a `username` and `password`. In **Stark & Wayne SHIELD™ > Credentials**, look for the **SHIELD Credentials**:
+1. The Stark & Wayne SHIELD Web UI is protected by a `username` and `password`. In **Stark & Wayne SHIELD > Credentials**, look for the **SHIELD Credentials**:
 
     ![installation-shield-credentials](images/installation-shield-credentials.png)
 
@@ -355,13 +355,13 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `shield` hostname 
 
 3. Open a browser and navigate to `https://shield.[system domain]`. For example, if the system domain is `system.example.com`, then point your browser to `https://shield.system.example.com`.
 
-4. Log in using the SHIELD credentials for the `admin` user. The Stark & Wayne SHIELD™ dashboard appears.
+4. Log in using the SHIELD credentials for the `admin` user. The Stark & Wayne SHIELD dashboard appears.
 
     ![installation-shield-dashboard](images/installation-shield-dashboard.png)
 
 ### <a id="verification-storages"></a>Confirm default Storage
 
-1. At the Stark & Wayne SHIELD™ Web UI, go to the **Storage** tab.
+1. At the Stark & Wayne SHIELD Web UI, go to the **Storage** tab.
 
 2. Confirm that there is a **default** storage:
 
@@ -369,7 +369,7 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `shield` hostname 
 
 ### <a id="verification-rentention-policies"></a>Confirm default Retention Policy
 
-1. At the Stark & Wayne SHIELD™ Web UI, go to the **Retention** tab.
+1. At the Stark & Wayne SHIELD Web UI, go to the **Retention** tab.
 
 2. Confirm that there is a **default** retention policy:
 
@@ -377,7 +377,7 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `shield` hostname 
 
 ### <a id="verification-schedules"></a>Confirm default Schedule
 
-1. At the Stark & Wayne SHIELD™ Web UI, go to the **Schedules** tab.
+1. At the Stark & Wayne SHIELD Web UI, go to the **Schedules** tab.
 
 2. Confirm that there is a **default** storage:
 
@@ -387,13 +387,13 @@ Stark & Wayne SHIELD™ Web UI should now be available at the `shield` hostname 
 
   **NOTE**: If you are NOT using the **Internal Database** you can omit this step.
 
-1. At the Stark & Wayne SHIELD™ Web UI, go to the **Targets** tab.
+1. At the Stark & Wayne SHIELD Web UI, go to the **Targets** tab.
 
 2. Confirm that there is a **shielddb** target:
 
     ![installation-shield-shielddb-target](images/installation-shield-shielddb-target.png)
 
-3. At the Stark & Wayne SHIELD™ Web UI, go to the **Jobs** tab.
+3. At the Stark & Wayne SHIELD Web UI, go to the **Jobs** tab.
 
 4. Confirm that there is a **shielddb** job:
 
