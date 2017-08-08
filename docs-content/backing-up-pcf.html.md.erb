@@ -1,8 +1,8 @@
 ---
-title: Backing up Pivotal Cloud Foundry&reg; databases
+title: Backing up Pivotal Cloud Foundry databases
 ---
 
-  **NOTE**: The exact procedure to back up Pivotal Cloud Foundry&reg; databases depends upon the database provider you select for your deployment. The following procedure assumes **Internal Databases - MySQL** as an example.
+  **NOTE**: The exact procedure to back up Pivotal Cloud Foundry (PCF) databases depends upon the database provider you select for your deployment. The following procedure assumes **Internal Databases - MySQL** as an example.
 
 ## <a id="configuration"></a>Configuration
 
@@ -12,7 +12,7 @@ There are two SHIELD components that we need to configure.
 
 SHIELD Targets stores the information about the remote data systems that should be backed up.
 
-Perform the following steps in order to create **Targets** for the Pivotal Cloud Foundry&reg; databases:
+Perform the following steps in order to create **Targets** for the PCF databases:
 
 1. In Pivotal Ops Manager, navigate to **Pivotal Elastic Runtime > Credentials** and grab the **MySQL Admin Credentials**:
 
@@ -22,9 +22,9 @@ Perform the following steps in order to create **Targets** for the Pivotal Cloud
 
     ![backup-pcf-shield-ip](images/backup-pcf-shield-ip.png)
 
-3. Open a new browser tab and navigate to the Stark & Wayne SHIELD™ Web UI (`https://shield.[system domain]`), click on the **Targets** tab.
+3. Open a new browser tab and navigate to the Stark & Wayne SHIELD Web UI (`https://shield.[system domain]`), click on the **Targets** tab.
 
-4. There are four Pivotal Cloud Foundry&reg; databases that we should backup:
+4. There are four PCF databases that we should backup:
     * `ccdb`: holds the **Cloud Controller** component data
     * `diego`: holds the **Diego** component data
     * `routing`: holds the **TCP Routing** component data
@@ -60,11 +60,11 @@ Perform the following steps in order to create **Targets** for the Pivotal Cloud
 
 SHIELD Jobs keeps track of a desired backup behavior, by marrying a target (the data to backup) with a store (where to send that data), according to a schedule (when to do the backups) and a retention policy (how long to keep the data for).
 
-Perform the following steps in order to create **Jobs** for the Pivotal Cloud Foundry&reg; databases:
+Perform the following steps in order to create **Jobs** for the PCF databases:
 
 1. At the Stark & Wayne SHIELD™ Web UI, click on the **Jobs** tab.
 
-2. We need to create a **Job** for each of the four Pivotal Cloud Foundry&reg; databases:
+2. We need to create a **Job** for each of the four PCF databases:
 
     ![backup-pcf-new-job](images/backup-pcf-new-job.png)
 
@@ -82,7 +82,7 @@ Perform the following steps in order to create **Jobs** for the Pivotal Cloud Fo
 
 ## <a id="verification"></a>Verification
 
-1. At the Stark & Wayne SHIELD™ Web UI, click on the **Jobs** tab. You should be able to see the four Jobs we created previously.
+1. At the Stark & Wayne SHIELD Web UI, click on the **Jobs** tab. You should be able to see the four Jobs we created previously.
 
 2. For each of them schedule an immediate run of the backup job by clicking on the left icon next to each job name:
 
