@@ -3,7 +3,7 @@ title: Using the Stark & Wayne SHIELD™ Web UI
 ---
 
 
-## Dashboard
+##<a id="dashboard"></a>Dashboard
 
 After you've installed and deployed the tile, you can visit the SHIELD Web UI which will look similar to:
 
@@ -18,7 +18,7 @@ Find the SHIELD credentials in Ops Manager:
 ![credentials](images/installation-shield-credentials.png)
 
 
-##### Storage
+##<a id="storage"></a>Storage
   Stores the destination of backup data, i.e. an S3 bucket, local file system directory, etc.
   Each record identifies a destination, the method by which to store and retrieve backup data to/from it ('plugin') and specific connection information required ('endpoint')
 
@@ -40,14 +40,14 @@ Find the SHIELD credentials in Ops Manager:
 
   * Click on `Create`.
 
-##### Targets
+## <a id="targets"></a>Targets
   Stores the information about the remote data systems that should be backed up.
   Each record identifies the method by which the target is backed up (plugin) and specific connection information required (endpoint)
 
   ![backup-pcf-new-target](images/backup-pcf-new-target.png)
 
   For example we can configure a Mysql backup Job
-##### Jobs
+## <a id="jobs"></a>Jobs
   The Actual job that backup your database/filesystem with the information from "Storage" "Targets" "Schedules" and "Retention"
 
   ![backup-pcf-new-job](images/backup-pcf-new-job.png)
@@ -86,7 +86,7 @@ Find the SHIELD credentials in Ops Manager:
 
   * Click on `Create`.
 
-##### Schedules
+## <a id="schedules"></a>Schedules
   Contains the timing information that informs the core daemon when it should run which backup jobs (or JOBS, see later).
 
   ![backup-pcf-new-target](images/installation-shield-default-schedule-full.png)
@@ -101,7 +101,7 @@ Find the SHIELD credentials in Ops Manager:
 
   * Click on `Create`.
 
-##### Retention
+## <a id="retention"></a>Retention
   Policies govern how long data is kept. For now, this is just a simple expiration time, with 'name' and 'summary' fields for annotation.
 
   ![backup-pcf-new-target](images/installation-shield-default-retention-short-term.png)
@@ -117,7 +117,7 @@ Find the SHIELD credentials in Ops Manager:
   * Click on `Create`.
 
 
-##### Jobs
+## <a id="jobs"></a>Jobs
   The Actual job that backup your database/filesystem with the information from "Storage" "Targets" "Schedules" and "Retention"
 
   ![backup-pcf-new-job](images/backup-pcf-new-job.png)
@@ -137,7 +137,7 @@ Find the SHIELD credentials in Ops Manager:
   * Click on `Create`.
 
 
-##### Backups
+## <a id="backups"></a>Backups
   Ablitiy to view the backups that are stored by SHIELD
   Click on the **Backups** tab, for each of the **Target Systems** you should be able to see the existing archives:
 
