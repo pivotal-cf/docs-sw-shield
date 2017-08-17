@@ -3,7 +3,7 @@ title: Using the Stark & Wayne SHIELD™ Web UI
 ---
 
 
-## Dashboard
+##<a id="dashboard"></a>Dashboard
 
 After you've installed and deployed the tile, you can visit the SHIELD Web UI which will look similar to:
 
@@ -18,8 +18,8 @@ Find the SHIELD credentials in Ops Manager:
 ![credentials](images/installation-shield-credentials.png)
 
 
-##### Storage
-  Stores the destination of backup data, i.e. an S3 bucket, local file system directory, etc.
+##<a id="storage"></a>Storage
+  Configure the storage destination of backup data to the object store, i.e. an S3 bucket, local file system directory, etc of your choice.
   Each record identifies a destination, the method by which to store and retrieve backup data to/from it ('plugin') and specific connection information required ('endpoint')
 
   ![backup-pcf-archives](images/installation-shield-default-backend.png)
@@ -40,53 +40,15 @@ Find the SHIELD credentials in Ops Manager:
 
   * Click on `Create`.
 
-##### Targets
-  Stores the information about the remote data systems that should be backed up.
+## <a id="targets"></a>Targets
+  Configure the remote data systems that should be backed up by filling out the form below.
   Each record identifies the method by which the target is backed up (plugin) and specific connection information required (endpoint)
 
   ![backup-pcf-new-target](images/backup-pcf-new-target.png)
 
   For example we can configure a Mysql backup Job
-##### Jobs
-  The Actual job that backup your database/filesystem with the information from "Storage" "Targets" "Schedules" and "Retention"
 
-  ![backup-pcf-new-job](images/backup-pcf-new-job.png)
-
-  For example we can configure Job for our CCDB database
-
-  * At the **Job Name** field enter the name of the database (ie: `ccdb`).
-
-  * At the **Target System** field select the desired target (ie: `ccdb`).
-
-  * At the **Storage Backend** field select the desired storage (ie: `default`).
-
-  * At the **Schedule** field select the desired schedule (ie: `daily`).
-
-  * At the **Retention Policy** field select the desired retention policy (ie: `short-term`).
-
-  * Click on `Create`.
-  * At the **Target Name** field enter the name of the database (ie: `ccdb`).
-
-  * At the **Summary** field enter a short description (ie: `Cloud Foundry Internal MySQL CC Database`).
-
-  * At the **Plugin Name** field enter `mysql`.
-
-  * At the **Configuration (JSON)** field enter:
-
-  ```
-  {
-    "mysql_host": "mysql.service.cf.internal",
-    "mysql_port": "3306",
-    "mysql_user": "MySQL Admin USERNAME",
-    "mysql_password": "MySQL Admin PASSWORD",
-    "mysql_database": "DATABASE NAME"
-  }
-  ```
-  * At the **Remote IP:port** field enter the **SHIELD VM IP Address** followed by `:5444` (ie: `10.213.10.57:5444`)
-
-  * Click on `Create`.
-
-##### Schedules
+## <a id="schedules"></a>Schedules
   Contains the timing information that informs the core daemon when it should run which backup jobs (or JOBS, see later).
 
   ![backup-pcf-new-target](images/installation-shield-default-schedule-full.png)
@@ -101,7 +63,7 @@ Find the SHIELD credentials in Ops Manager:
 
   * Click on `Create`.
 
-##### Retention
+## <a id="retention"></a>Retention
   Policies govern how long data is kept. For now, this is just a simple expiration time, with 'name' and 'summary' fields for annotation.
 
   ![backup-pcf-new-target](images/installation-shield-default-retention-short-term.png)
@@ -117,8 +79,8 @@ Find the SHIELD credentials in Ops Manager:
   * Click on `Create`.
 
 
-##### Jobs
-  The Actual job that backup your database/filesystem with the information from "Storage" "Targets" "Schedules" and "Retention"
+## <a id="jobs"></a>Jobs
+  The actual job that backup your database/filesystem with the information from "Storage" "Targets" "Schedules" and "Retention"
 
   ![backup-pcf-new-job](images/backup-pcf-new-job.png)
 
@@ -137,7 +99,7 @@ Find the SHIELD credentials in Ops Manager:
   * Click on `Create`.
 
 
-##### Backups
+## <a id="backups"></a>Backups
   Ablitiy to view the backups that are stored by SHIELD
   Click on the **Backups** tab, for each of the **Target Systems** you should be able to see the existing archives:
 

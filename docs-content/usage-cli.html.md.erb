@@ -4,7 +4,7 @@ title: Using the Stark & Wayne SHIELD™ CLI
 
 The primary method for configuring SHIELD is the `shield` CLI.
 
-## Installation
+## <a id="installation"></a>Installation
 
 On Ubuntu/Debian machines, such as the Ops Manager VM, you can install the `shield` CLI using `apt-get`:
 
@@ -23,7 +23,7 @@ brew tap starkandwayne/cf
 brew install starkandwayne/cf/shield
 ```
 
-## Help
+##<a id="help"></a> Help
 
 The `shield` CLI is well documented and offers a detailed description of all available commands.
 To see the list of commands:
@@ -97,9 +97,9 @@ RAW OUTPUT
 }
 ```
 
-## Targeting your SHIELD installation
+##<a id="installation"></a> Targeting your SHIELD installation
 
-To interact with your deployed SHIELD via the cli first we must target the SHIELD Daemon API endpoint that was deployed when you provisioned Stark & Wayne SHIELD.
+To interact with your deployed SHIELD via the CLI first we must target the SHIELD Daemon API endpoint that was deployed when you provisioned Stark & Wayne SHIELD.
 
 With respect to the `shield` CLI, the targeted SHIELD daemon API is called a "backend".
 
@@ -131,7 +131,7 @@ The `-k` flag must be used when interacting with your SHIELD Daemon API if it ha
 
 ##
 
-## Creating entities
+##<a id="create-entries"></a> Creating entities
 
 In order to set up a regularly running job in SHIELD you must create a number of entities:
 
@@ -196,7 +196,7 @@ Remote IP:     10.0.1.2:5444
 
 Notice that the `pg_host` is set to `127.0.0.1` in the plugin configuration and the `Remote Ip` is set to `10.0.1.2:5444`. In this case it is assumed that the SHIELD Agent performing the backup is colocated on the same VM as the PostgreSQL database. The Agent is listening on `10.0.1.2:5444` and the database will be reachable via localhost on that VM. When the backup is run the SHIELD Daemon will contact the remotely running Agent and pass the configuration which will be used to execute the plugin.
 
-## Setting up a job
+##<a id="setting-up-a-jobs"></a> Setting up a job
 
 Once all of the entities have been created the job combines everything into a task that the Daemon will perform:
 
@@ -293,7 +293,7 @@ UUID                                  Target                     Restore IP     
 257b9f5f-c241-4aad-8a00-74de90e40220  a-pg-db (postgres)         10.0.1.2:5444  default (google)          Tue, 11 Jul 2017 14:35:05 +0000  Fri, 21 Jul 2017 14:35:05 +0000  valid
 ```
 
-## Scripting
+##<a id="scripting"></a> Scripting
 
 The `shield` CLI is easy to use in scripts by adding the `--raw` flag. This will make the CLI accept JSON formatted configuration piped from Stdin and output configuration via JSON so that it can be further used by other tools.
 
