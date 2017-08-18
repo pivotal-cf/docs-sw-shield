@@ -2,26 +2,16 @@
 title: Installing Stark & Wayne SHIELD™ to Pivotal Ops Manager
 ---
 
-## <a id="requirements"></a>Requirements
-
-* Pivotal Ops Manager version 1.9 or greater
-* Pivotal Cloud Foundry version 1.9 or greater
-* [Redis for PCF](https://network.pivotal.io/products/p-redis/)
-* A storage account to store the backup archives. Available options are:
-    * Amazon AWS S3
-    * A compatible Amazon AWS S3 system (like Ceph)
-    * Microsoft Azure
-    * Google Cloud Storage
-
 ## <a id="redis"></a>Install Redis for PCF
 
-Before you attempt to install Stark & Wayne SHIELD, please successfully install [Redis for PCF](https://network.pivotal.io/products/p-redis/). Installation instructions are available at http://docs.pivotal.io/redis/1-9/
+Before you install Stark & Wayne SHIELD, install [Redis for PCF](https://network.pivotal.io/products/p-redis/).
+Installation instructions are available at http://docs.pivotal.io/redis/1-9/
 
 ![installation-redis-pcf](images/installation-redis-pcf.png)
 
-## <a id="upload-tile"></a>Upload tile
+## <a id="upload-tile"></a>Upload Tile
 
-See [Downloads](download.html) for instructions for downloading the latest tile.
+For instructions for downloading the latest tile, see [Downloads](download.html).
 
 Click "Import a Product" on the left hand side of your Ops Manager dashboard. Select the `starkandwayne-shield-x.y.z.pivotal` file to upload.
 

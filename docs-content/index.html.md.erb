@@ -1,16 +1,6 @@
 ---
-title: Stark & Wayne SHIELD™ for Pivotal Cloud Foundry&reg; (Beta)
+title: Stark & Wayne SHIELD™ for Pivotal Cloud Foundry (Beta)
 ---
-
-<style>
-    .note.warning {
-        background-color: #fdd;
-        border-color: #fbb
-    }
-    .note.warning:before {
-        color: #f99;
-    }
-</style>
 
 <p class="note warning">
 <strong>IMPORTANT: </strong>
@@ -21,7 +11,9 @@ The Stark & Wayne SHIELD for Pivotal Cloud Foundry (PCF) tile is currently in be
 
 ## <a id="Overview"></a>Overview
 
-Stark & Wayne SHIELD is a standalone system that can perform backup and restore functions for a wide variety of pluggable data systems (like Redis, PostgreSQL, MySQL, RabbitMQ, etc.), storing backup data in pluggable storage solutions (i.e. local files, S3 blobstore, etc.).  SHIELD enables self-service for end users to perform ad hoc backup / restore operations, review backup schedules, retention policies and backup job runs, etc.
+Stark & Wayne SHIELD is a standalone system that can perform backup and restore functions for a wide variety of pluggable data systems 
+(like Redis, PostgreSQL, MySQL, RabbitMQ, etc.), storing backup data in pluggable storage solutions (i.e. local files, S3 blobstore, etc.).
+SHIELD enables self-service for end users to perform ad hoc backup and restore operations, review backup schedules, retention policies and backup job runs, etc.
 
 ![starkandwayne-shield-architecture](images/starkandwayne-shield-architecture.png)
 
@@ -29,16 +21,17 @@ Stark & Wayne SHIELD is a standalone system that can perform backup and restore 
 * Backups backups
 * Schedule backups
 * Manual restore 
-* Backup Management 
+* Backup management 
 * Extensible plugin system
 
 
 ## <a id="Requirements"></a>Requirements
 
-* Pivotal Ops Manager version 1.9 or greater
-* Pivotal Cloud Foundry version 1.9 or greater
+* Pivotal Ops Manager v1.9 or later
+* PCF v1.9 or later
 * [Redis for PCF](https://network.pivotal.io/products/p-redis/)
-* A storage account to store the backup archives. Available options are:
+* A storage account to store the backup archives.
+  Available options are:
     * Amazon AWS S3
     * A compatible Amazon AWS S3 system (like Ceph)
     * Microsoft Azure
