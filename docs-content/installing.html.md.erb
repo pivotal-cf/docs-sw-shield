@@ -1,27 +1,17 @@
 ---
-title: Installing Stark & Wayne SHIELD™ to Pivotal Ops Manager
+title: Installing Stark & Wayne SHIELD™ for PCF
 ---
-
-## <a id="requirements"></a>Requirements
-
-* Pivotal Ops Manager version 1.9 or greater
-* Pivotal Cloud Foundry version 1.9 or greater
-* [Redis for PCF](https://network.pivotal.io/products/p-redis/)
-* A storage account to store the backup archives. Available options are:
-    * Amazon AWS S3
-    * A compatible Amazon AWS S3 system (like Ceph)
-    * Microsoft Azure
-    * Google Cloud Storage
 
 ## <a id="redis"></a>Install Redis for PCF
 
-Before you attempt to install Stark & Wayne SHIELD, please successfully install [Redis for PCF](https://network.pivotal.io/products/p-redis/). Installation instructions are available at http://docs.pivotal.io/redis/1-9/
+Before you install Stark & Wayne SHIELD, install [Redis for PCF](https://network.pivotal.io/products/p-redis/).
+Installation instructions are available at http://docs.pivotal.io/redis/1-9/
 
 ![installation-redis-pcf](images/installation-redis-pcf.png)
 
-## <a id="upload-tile"></a>Upload tile
+## <a id="upload-tile"></a>Upload Tile
 
-See [Downloads](download.html) for instructions for downloading the latest tile.
+For instructions for downloading the latest tile, see Downloads.
 
 Click "Import a Product" on the left hand side of your Ops Manager dashboard. Select the `starkandwayne-shield-x.y.z.pivotal` file to upload.
 
@@ -359,7 +349,7 @@ Stark & Wayne SHIELD Web UI should now be available at the `shield` hostname in 
 
     ![installation-shield-dashboard](images/installation-shield-dashboard.png)
 
-### <a id="verification-storages"></a>Confirm default Storage
+### <a id="verification-storages"></a>Confirm Default Storage
 
 1. At the Stark & Wayne SHIELD Web UI, go to the **Storage** tab.
 
@@ -367,7 +357,7 @@ Stark & Wayne SHIELD Web UI should now be available at the `shield` hostname in 
 
     ![installation-shield-default-storage](images/installation-shield-default-storage.png)
 
-### <a id="verification-rentention-policies"></a>Confirm default Retention Policy
+### <a id="verification-rentention-policies"></a>Confirm Default Retention Policy
 
 1. At the Stark & Wayne SHIELD Web UI, go to the **Retention** tab.
 
@@ -375,7 +365,7 @@ Stark & Wayne SHIELD Web UI should now be available at the `shield` hostname in 
 
     ![installation-shield-default-retention-policy](images/installation-shield-default-retention-policy.png)
 
-### <a id="verification-schedules"></a>Confirm default Schedule
+### <a id="verification-schedules"></a>Confirm Default Schedule
 
 1. At the Stark & Wayne SHIELD Web UI, go to the **Schedules** tab.
 
@@ -383,7 +373,7 @@ Stark & Wayne SHIELD Web UI should now be available at the `shield` hostname in 
 
     ![installation-shield-default-schedule](images/installation-shield-default-schedule.png)
 
-### <a id="verification-shielddb"></a>Confirm SHIELD database Target and Job
+### <a id="verification-shielddb"></a>Confirm SHIELD Database Target and Job
 
   **NOTE**: If you are NOT using the **Internal Database** you can omit this step.
 

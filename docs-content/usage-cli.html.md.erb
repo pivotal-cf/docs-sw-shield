@@ -97,7 +97,7 @@ RAW OUTPUT
 }
 ```
 
-##<a id="installation"></a> Targeting your SHIELD installation
+##<a id="installation"></a> Target Your SHIELD Installation
 
 To interact with your deployed SHIELD via the CLI first we must target the SHIELD Daemon API endpoint that was deployed when you provisioned Stark & Wayne SHIELD.
 
@@ -129,9 +129,7 @@ Find the SHIELD credentials in Ops Manager:
 
 The `-k` flag must be used when interacting with your SHIELD Daemon API if it has a self-signed SSL certificates.
 
-##
-
-##<a id="create-entries"></a> Creating entities
+##<a id="create-entries"></a> Create Entities
 
 In order to set up a regularly running job in SHIELD you must create a number of entities:
 
@@ -194,9 +192,12 @@ Configuration: {"pg_host":"127.0.0.1","pg_password":"[password]","pg_port":"5432
 Remote IP:     10.0.1.2:5444
 ```
 
-Notice that the `pg_host` is set to `127.0.0.1` in the plugin configuration and the `Remote Ip` is set to `10.0.1.2:5444`. In this case it is assumed that the SHIELD Agent performing the backup is colocated on the same VM as the PostgreSQL database. The Agent is listening on `10.0.1.2:5444` and the database will be reachable via localhost on that VM. When the backup is run the SHIELD Daemon will contact the remotely running Agent and pass the configuration which will be used to execute the plugin.
+Notice that the `pg_host` is set to `127.0.0.1` in the plugin configuration and the `Remote Ip` is set to `10.0.1.2:5444`.
+In this case it is assumed that the SHIELD Agent performing the backup is colocated on the same VM as the PostgreSQL database.
+The Agent is listening on `10.0.1.2:5444` and the database will be reachable via localhost on that VM.
+When the backup is run the SHIELD Daemon will contact the remotely running Agent and pass the configuration which will be used to execute the plugin.
 
-##<a id="setting-up-a-jobs"></a> Setting up a job
+##<a id="setting-up-a-jobs"></a> Set Up a Job
 
 Once all of the entities have been created the job combines everything into a task that the Daemon will perform:
 
